@@ -184,11 +184,11 @@ app.get('/reports/:id', isLoggedIn, async (req, res) => {
 
 
 
-// app.get('/history', isLoggedIn, (req, res) => {
-//     const reports = Report.find({ author: req.user.id })
-//     console.log(reports.author)
-//     // res.render('reports/history', { reports });
-// })
+app.get('/history', isLoggedIn, (req, res) => {
+    // const reports = Report.find({ author: req.user.id })
+    // console.log(reports.author)
+    res.render('reports/history');
+})
 
 
 
