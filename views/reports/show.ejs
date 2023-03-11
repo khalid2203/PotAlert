@@ -1,0 +1,221 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show</title>
+</head>
+
+<body> -->
+
+<% layout('/layouts/boilerplate') %>
+
+    <div class="row">
+        <h3 class="text-center mb-3">Detailed Report</h3>
+        <div class="col-6">
+            <div class="card mb-3">
+                <% for(let img of report.images){ %>
+                    <img class="card-img-top" src="<%= img.url %>" alt="">
+                    <% } %>
+            </div>
+        </div>
+        <div class="col-6">
+            <!-- Detailed Data representation -->
+            <table class="table table-bordered" style="width: auto;">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <td>
+                            <%= report.author.username %>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>
+                            <%= report.name %>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">State</th>
+                        <td>
+                            <%= report.state %>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Detailed Location</th>
+                        <td>
+                            <%= report.location %>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Soverity</th>
+                        <% if(report.soverity=="LOW" ){ %>
+                            <td class="text-success">
+                                <%= report.soverity %>
+                            </td>
+                            <%} else if(report.soverity=="MEDIUM" ){ %>
+                                <td class="text-primary">
+                                    <%= report.soverity %>
+                                </td>
+                                <%} else{ %>
+                                    <td class="text-danger">
+                                        <%= report.soverity %>
+                                    </td>
+                                    <% } %>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td colspan="2">
+                            <%= report.description %>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Reported Date</th>
+                        <td colspan="2">
+                            <%= report.date %>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Reported Time</th>
+                        <td colspan="2">
+                            <%= report.time %>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- <a href="#" target="_blank" class="btn btn-primary" onclick="displayOnMap()">Get Directions <img
+                    class="direction" src="/direction1.png" alt=""></a> -->
+
+            <a href="https://google.com/maps?q=<%= report.latitude%>, <%=report.longitude%>" class="btn btn-primary"
+                target="_blank">Get Directions
+                <img class="direction" src="/direction1.png" alt=""></a>
+
+
+
+        </div>
+
+    </div>
+
+    <!-- Confirm Report and worker details -->
+    <div class="row">
+        <h3 class="text-center mt-3 mb-3">Work Status</h3>
+        <div class="col-6">
+            <form action="/reports/<%=report._id%>/works" method="POST">
+                <div class="form-group mb-3">
+                    <label for="name">Worker's Name</label>
+                    <input type="text" class="form-control" id="workername" name="work[name]" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="contact">Worker's Contact Number</label>
+                    <input type="number" class="form-control" id="contact" name="work[contact]" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="status">Change Status</label>
+                    <select class="form-control form-select" id="status" name="work[status]">
+                        <option value="Approved">Approved</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <button class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-6 mt-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Work's Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Current Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let work of report.works){ %>
+                        <tr>
+                            <td>
+                                <%= work.name %>
+                            </td>
+                            <td>
+                                <%= work.contact %>
+                            </td>
+                            <% if(work.status=="Approved" ){ %>
+                                <td class="text-primary">
+                                    <%= work.status %>
+                                </td>
+                                <%} else if(work.status=="In progress" ){ %>
+                                    <td class="text-warning">
+                                        <%= work.status %>
+                                    </td>
+                                    <%} else{ %>
+                                        <td class="text-success">
+                                            <%= work.status %>
+                                        </td>
+                                        <% } %>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <style>
+        .direction {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+        }
+    </style>
+
+
+
+    <!-- <script>
+        // Use this function to get direction on map
+        function displayOnMap() {
+            window.location.href = `https://google.com/maps?q=<%= report.latitude%>, <%=report.longitude%>`;
+        }
+    </script> -->
+
+
+
+    <!-- <h1>
+        <%= report.name %>
+    </h1>
+    <h1>
+        <%= report.location %>
+    </h1>
+    <img src="<%= report.image %>" alt="">
+    <p>
+        <%= report.description %>
+    </p>
+    <h7>
+        <%= report.soverity %>
+    </h7> -->
+
+    <div>
+        <a href="/reports">All Report</a>
+    </div>
+
+    <!-- </body>
+
+</html> -->
