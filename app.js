@@ -126,10 +126,21 @@ app.get("/usershow", isLoggedIn, (req, res) => {
     res.render("reports/userShow");
 })
 
+// Chatgpt code below above code is also correct but without current status
 app.get("/reports", isLoggedIn, async (req, res) => {
-    const reports = await Report.find({}).populate('author');    //.populate('author') is need to remove if error just for testing
-    res.render('reports/index', { reports })
-})
+    const reports = await Report.find({})
+        .populate("author")
+        // Adding Status
+        .populate({
+            path: "works",
+            options: { sort: { _id: -1 }, limit: 1 }, // Sort by _id in descending order and limit the result to 1 item
+        });
+
+    res.render("reports/index", { reports });
+});
+
+
+
 
 app.get('/reports/newCamera', isLoggedIn, (req, res) => {
     res.render('reports/newCamera')
@@ -160,6 +171,7 @@ app.post('/reports', upload.array('image'), (req, res) => {
     res.send("it worked")
 })
 
+// Only Create work
 app.post('/reports/:id/works', async (req, res) => {
     const report = await Report.findById(req.params.id)
     const work = new Work(req.body.work)
@@ -169,12 +181,6 @@ app.post('/reports/:id/works', async (req, res) => {
     res.redirect(`/reports/${report._id}`)
 })
 
-// Updating Work
-app.put('/reports/:id/works', async (req, res) => {
-    const { id } = req.params;
-    const work = await Report.findByIdAndUpdate(id, { ...req.body.work })
-
-})
 
 
 app.get('/reports/:id', isLoggedIn, async (req, res) => {
@@ -185,10 +191,23 @@ app.get('/reports/:id', isLoggedIn, async (req, res) => {
 
 
 app.get('/history', isLoggedIn, (req, res) => {
-    // const reports = Report.find({ author: req.user.id })
-    // console.log(reports.author)
-    res.render('reports/history');
-})
+    const userId = req.user._id;
+    Report.find({ author: userId })
+        // Adding Status to the History Page
+        .populate({
+            path: "works",
+            options: { sort: { _id: -1 }, limit: 1 }, // Sort by _id in descending order and limit the result to 1 item
+        })
+        // 
+        .populate('author')
+        .exec((err, reports) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('reports/history', { reports });
+            }
+        });
+});
 
 
 

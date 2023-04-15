@@ -57,13 +57,32 @@
                                 </td>
                                 <% } %>
 
-                                    <td class="text-primary">Approved</td>
-                                    <td class="text-muted">
-                                        <%= report.date %>
-                                    </td>
-                                    <td><a class="btn btn-primary btn-sm" href="/reports/<%= report._id %>">
-                                            View Details
-                                        </a></td>
+                                    <% if (report.works.length) {%>
+                                        <% if(report.works[0].status=="Approved" ){ %>
+                                            <td class="text-primary">
+                                                <%= report.works[0].status %>
+                                            </td>
+                                            <% }else if(report.works[0].status=="In progress" ) {%>
+                                                <td class="text-warning">
+                                                    <%= report.works[0].status %>
+                                                </td>
+                                                <%} else {%>
+                                                    <td class="text-success">
+                                                        <%= report.works[0].status %>
+                                                    </td>
+                                                    <% } %>
+                                                        <% }else{ %>
+                                                            <td class="text-danger">
+                                                                Pending
+                                                            </td>
+                                                            <% } %>
+                                                                <td class="text-muted">
+                                                                    <%= report.date %>
+                                                                </td>
+                                                                <td><a class="btn btn-primary btn-sm"
+                                                                        href="/reports/<%= report._id %>">
+                                                                        View Details
+                                                                    </a></td>
                 </tr>
 
                 <% } %>

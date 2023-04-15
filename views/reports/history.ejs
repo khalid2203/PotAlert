@@ -1,2 +1,62 @@
 <% layout('/layouts/boilerplate') %>
     <h1>History</h1>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Reported Date</th>
+                <th scope="col">Reported Time</th>
+                <th scope="col">Location</th>
+                <th scope="col">Soverity</th>
+                <th scope="col">Current Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let report of reports) { %>
+                <tr>
+                    <td>
+                        <%= report.date %>
+                    </td>
+                    <td>
+                        <%= report.time %>
+                    </td>
+                    <td>
+                        <%= report.location %>
+                    </td>
+                    <% if(report.soverity=="LOW" ){ %>
+                        <td class="text-success">
+                            <%= report.soverity %>
+                        </td>
+                        <%} else if(report.soverity=="MEDIUM" ){ %>
+                            <td class="text-primary">
+                                <%= report.soverity %>
+                            </td>
+                            <%} else{ %>
+                                <td class="text-danger">
+                                    <%= report.soverity %>
+                                </td>
+                                <% } %>
+                                    <% if (report.works.length) {%>
+                                        <% if(report.works[0].status=="Approved" ){ %>
+                                            <td class="text-primary">
+                                                <%= report.works[0].status %>
+                                            </td>
+                                            <% }else if(report.works[0].status=="In progress" ) {%>
+                                                <td class="text-warning">
+                                                    <%= report.works[0].status %>
+                                                </td>
+                                                <%} else {%>
+                                                    <td class="text-success">
+                                                        <%= report.works[0].status %>
+                                                    </td>
+                                                    <% } %>
+                                                        <% }else{ %>
+                                                            <td class="text-danger">
+                                                                Pending
+                                                            </td>
+                                                            <% } %>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
