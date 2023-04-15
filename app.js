@@ -126,7 +126,7 @@ app.get("/usershow", isLoggedIn, (req, res) => {
     res.render("reports/userShow");
 })
 
-// Chatgpt code below above code is also correct but without current status
+// showing all the reports with current status
 app.get("/reports", isLoggedIn, async (req, res) => {
     const reports = await Report.find({})
         .populate("author")
