@@ -12,7 +12,7 @@
 
 <% layout('/layouts/boilerplate') %>
 
-    <div class="row">
+    <div class="row topcontent">
         <h3 class="text-center mb-3">Detailed Report</h3>
         <div class="col-6">
             <div class="card mb-3">
@@ -127,6 +127,7 @@
                         <option value="Approved">Approved</option>
                         <option value="In progress">In progress</option>
                         <option value="Completed">Completed</option>
+                        <option value="Rejected">Rejected</option>
                     </select>
                 </div>
                 <div class="mb-3 mt-3">
@@ -167,11 +168,15 @@
                                     <td class="text-warning">
                                         <%= work.status %>
                                     </td>
-                                    <%} else{ %>
-                                        <td class="text-success">
+                                    <%} else if(work.status=="Rejected" ){ %>
+                                        <td class="text-danger">
                                             <%= work.status %>
                                         </td>
-                                        <% } %>
+                                        <%} else{ %>
+                                            <td class="text-success">
+                                                <%= work.status %>
+                                            </td>
+                                            <% } %>
                         </tr>
                         <% } %>
                 </tbody>
@@ -183,13 +188,16 @@
 
 
 
-
     <style>
         .direction {
             width: 20px;
             height: 20px;
             margin-left: 5px;
         }
+
+
+
+        
     </style>
 
 

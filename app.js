@@ -209,6 +209,12 @@ app.get('/history', isLoggedIn, (req, res) => {
         });
 });
 
+// Notification
+
+app.get("/notifications", (req, res) => {
+    res.render("reports/notification");
+})
+
 
 
 

@@ -85,7 +85,17 @@
 
         #long,
         #lat {
-            /* visibility: hidden; */
+            visibility: hidden;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .row {
+                width: 100%;
+            }
+
+            html {
+                margin-right: 0px;
+            }
         }
     </style>
 

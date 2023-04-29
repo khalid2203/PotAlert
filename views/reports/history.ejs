@@ -46,16 +46,20 @@
                                                 <td class="text-warning">
                                                     <%= report.works[0].status %>
                                                 </td>
-                                                <%} else {%>
-                                                    <td class="text-success">
+                                                <% }else if(report.works[0].status=="Rejected" ) {%>
+                                                    <td class="text-danger">
                                                         <%= report.works[0].status %>
                                                     </td>
-                                                    <% } %>
-                                                        <% }else{ %>
-                                                            <td class="text-danger">
-                                                                Pending
-                                                            </td>
-                                                            <% } %>
+                                                    <%} else {%>
+                                                        <td class="text-success">
+                                                            <%= report.works[0].status %>
+                                                        </td>
+                                                        <% } %>
+                                                            <% }else{ %>
+                                                                <td class="text-secondary">
+                                                                    Pending
+                                                                </td>
+                                                                <% } %>
                 </tr>
                 <% } %>
         </tbody>

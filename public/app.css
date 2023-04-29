@@ -316,3 +316,11 @@ a.article:hover {
   }
 
 }
+
+@media only screen and (max-width: 500px) {
+  .imagerow {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+}
